@@ -1,56 +1,4 @@
-// // load categories
-// const loadAllCategories = async () => {
-//     const url = "https://openapi.programming-hero.com/api/news/categories"
-//     const res = await fetch(url);
-//     const d = await res.json();
-//     displayAllCategories(d.category_name)
-//     // console.log(d)
-//     // return d
-// }
 
-
-// // { "status": true, "data": { "news_category": [{ "category_id": "01", "category_name": "Breaking News" }, { "category_id": "02", "category_name": "Regular News" }, { "category_id": "03", "category_name": "International News" }, { "category_id": "04", "category_name": "Sports" }, { "category_id": "05", "category_name": "Entertainment" }, { "category_id": "06", "category_name": "Culture" }, { "category_id": "07", "category_name": "Arts" }, { "category_id": "08", "category_name": "All News" }] } }
-
-
-
-// // display all categories
-// const displayAllCategories = async (newsall) => {
-//     // const d = await loadAllCategories();
-//     // console.log(d)
-//     const menu = document.getElementById('all-categories');
-//     // for (const news in d.data.news_category[1]
-//     // ) {
-
-//     //     console.log(news.category_name)
-//     // }
-//     for (const news in newsall)
-//         console.log(news)
-// }
-
-// displayAllCategories()
-// loadAllCategories()
-
-
-// const loadAllCategories = () => {
-//     const url = 'https://openapi.programming-hero.com/api/news/categories'
-//     fetch(url)
-//         .then(res => res.json())
-//         .then(data => displayAllCategories(data.data.news_category[0]))
-// }
-
-// const displayAllCategories = allNews => {
-//     const menu = document.getElementById('all-categories');
-//     // allNews.forEach(news => {
-//     //     console.log(allNews)
-//     // })
-//     for (news in allNews) {
-//         console.log(news)
-//         const p = document.createElement('p');
-
-//         p.innerHTML = `<p>'${news.category_name}'</p>`
-//         menu.appendChild(p)
-//     }
-// }
 
 
 const loadAllCategories = () => {
@@ -58,6 +6,8 @@ const loadAllCategories = () => {
     var k = fetch(url)
         .then(res => res.json())
         .then(data => displayAllCategories(data.data.news_category))
+    // .then(data => console.log(data.data.news_category))
+    // console.log(data.data.news_category)
 }
 
 const displayAllCategories = data => {
@@ -66,12 +16,83 @@ const displayAllCategories = data => {
         // console.log(newsArray.category_name);
 
         const p = document.createElement('p');
-        // p.classList.add('nav-item')
-        p.innerHTML = `<p>${newsArray.category_name}</p>`
+
+        p.innerHTML = `<p>${newsArray.category_name}</p>
+        
+
+        `
         menu.appendChild(p)
     });
 }
 
+// const loadNews = category_id => {
+//     const url = 'https://openapi.programming-hero.com/api/news/category/{category_id}'
+//     fetch(url)
+//         .then(res => res.json())
+//         .then(data =>)
 
+// }
+
+const loadNews = () => {
+    const url = 'https://openapi.programming-hero.com/api/news/category/01'
+    fetch(url)
+        .then(res => res.json())
+        .then(data => disPlayNews(data.data))
+
+}
+
+const disPlayNews = data => {
+    // console.log(data)
+    const newsContainer = document.getElementById('news-container');
+    data.forEach(news => {
+        console.log(news)
+        const newsDiv = document.createElement('div')
+        newsDiv.classList.add('col-lg-6', 'col-md-12')
+        newsDiv.innerHTML = `
+        <div class="row border rounded g-0">
+                        <div class="col-lg-4 col-md-4">
+                            <img src="${news.thumbnail_url}" class="img-fluid w-100 h-100" alt="...">
+                        </div>
+                        <div class="col-lg-8 col-md-8 g-3">
+                            <div class="card-body">
+                                <h5 class="card-title">${news.title}</h5>
+                                <p class="card-text">${news.details.slice(0, 200) + '...'}</p>
+                                <p><div class="row">
+                                <div class="col-4">
+    
+                                
+                                    <div class="col-lg-4">
+                                        <img class="img-fluid" src="${news.author.img}" alt="">
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <h6>${news.author.name}</h6>
+                                        <div class="text-muted"><small>${news.author.published_date}</small> </div>
+    
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+    
+                                <div class="col-4">
+                                    <h1 class="fw-bold">${news.total_view + 'm'}+</h1>
+                                    <p class="fw-bold">Views</p>
+                                </div>
+    
+                                <div class="col-4">
+                                    <h1 class="fw-bold">500+</h1>
+                                    <p class="fw-bold">Clients</p>
+                                </div>
+                            </div></p>
+                            </div>
+                        </div>
+                        
+                    </div>
+        `
+        newsContainer.appendChild(newsDiv)
+    })
+}
+
+
+loadNews()
 loadAllCategories()
 // displayAllCategories()
