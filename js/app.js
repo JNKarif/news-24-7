@@ -6,6 +6,7 @@ const loadAllCategories = () => {
     fetch(url)
         .then(res => res.json())
         .then(data => displayAllCategories(data.data.news_category))
+        .catch(error => error)
     // .then(data => console.log(data.data.news_category))
     // console.log(data.data.news_category)
 
@@ -44,6 +45,7 @@ const loadNewsSearch = (category_id) => {
     fetch(url)
         .then(res => res.json())
         .then(data => displayNewsSearch(data.data[0]))
+        .catch(error => error)
     // .then(data => console.log(data.data[0]))
 
     toggleSpinner(true)
@@ -53,14 +55,15 @@ const loadNewsSearch = (category_id) => {
 //modal loading 
 const loadModal = (_id) => {
     const url = `https://openapi.programming-hero.com/api/news/${_id}`
-    console.log(url)
+    // console.log(url)
     fetch(url)
         .then(res => res.json())
         .then(data => displayModal(data.data[0]))
+        .catch(error => error)
 }
 
 const displayModal = modal => {
-    console.log(modal)
+    // console.log(modal)
     const modalDetails = document.getElementById('exampleModalLabel')
     modalDetails.innerText = modal.details;
     const relatedInfo = document.getElementById('related-info');
@@ -133,7 +136,7 @@ const loadNews = () => {
     fetch(url)
         .then(res => res.json())
         .then(data => disPlayNews(data.data))
-
+        .catch(error => error)
 }
 
 const disPlayNews = data => {
