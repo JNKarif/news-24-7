@@ -8,7 +8,7 @@ const loadAllCategories = () => {
         .then(data => displayAllCategories(data.data.news_category))
     // .then(data => console.log(data.data.news_category))
     // console.log(data.data.news_category)
-    toggleSpinner(true)
+
 }
 
 const displayAllCategories = data => {
@@ -25,7 +25,7 @@ const displayAllCategories = data => {
         `
         menu.appendChild(p)
     });
-    toggleSpinner(false)
+
 }
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader');
@@ -46,22 +46,41 @@ const loadNewsSearch = (category_id) => {
         .then(data => displayNewsSearch(data.data[0]))
     // .then(data => console.log(data.data[0]))
 
-
+    toggleSpinner(true)
 }
 
 
-// loadNewsSearch()
-// const loadModal = (id) => {
-//     const url = `https://openapi.programming-hero.com/api/news/${id}`
-//     console.log(url)
-//     fetch(url)
-//         .then(res => res.json())
-//         .then(data => console.log(data.data))
-// }
-// loadModal('${_id}')
+//modal loading 
+const loadModal = (_id) => {
+    const url = `https://openapi.programming-hero.com/api/news/${_id}`
+    console.log(url)
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayModal(data.data[0]))
+}
+
+const displayModal = modal => {
+    console.log(modal)
+    const modalDetails = document.getElementById('exampleModalLabel')
+    modalDetails.innerText = modal.details;
+    const relatedInfo = document.getElementById('related-info');
+    relatedInfo.innerHTML = `
+    <p>Author Name: ${modal.author.name ? modal.author.name : 'No data found'}</p>
+    <p>Total Views: ${modal.total_view ? modal.total_view + 'm' : 'No data found'}</p>
+    
+    `
+}
+
+
+
+
+// loadModal()
+
+
 // onclick on categories 
 const displayNewsSearch = news => {
     // console.log(news)
+    toggleSpinner(false)
     const searchCategory = document.getElementById('search-category');
     const searchDiv = document.createElement('div');
     searchDiv.innerHTML = '';
@@ -80,24 +99,22 @@ const displayNewsSearch = news => {
     
                                 
                                     <div class="col-lg-4">
-                                        <img class="img-fluid" src="${news.author ? news.author.img : 'no data found'}" alt="">
+                                        <img class="img-fluid" src="${news.author.img ? news.author.img : 'no data found'}" alt="">
                                     </div>
                                     <div class="col-lg-8">
-                                        <h6>${news.author ? news.author.name : 'no data found'}</h6>
-                                        <div class="text-muted"><small>${news.author.published_date}</small> </div>
-    
+                                        <h6>${news.author.name ? news.author.name : 'no data found'}</h6>
                                     </div>
                                 </div>
                             </div>
                                 </div>
     
                                 <div class="col-4">
-                                    <h1 class="fw-bold">${news.total_view + 'm'}+</h1>
+                                    <h1 class="fw-bold">${news.total_view ? news.total_view + 'm' : 'No data found'}+</h1>
                                     <p class="fw-bold">Views</p>
                                 </div>
     
                                 <div class="col-4">
-                                <button onclick="loadNewsSearch('${news.category_id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button onclick="loadModal('${news._id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 More...
                             </button>
                 
@@ -141,11 +158,11 @@ const disPlayNews = data => {
     
                                 
                                     <div class="col-lg-4">
-                                        <img class="img-fluid" src="${news.author.img}" alt="">
+                                        <img class="img-fluid" src="${news.author.img ? news.author.img : 'No data found'}" alt="">
                                     </div>
                                     <div class="col-lg-8">
-                                        <h6>${news.author.name}</h6>
-                                        <div class="text-muted"><small>${news.author.published_date}</small> </div>
+                                        <h6>${news.author.name ? news.author.name : 'No data found'}</h6>
+                                        
     
                                     </div>
                                 </div>
@@ -153,12 +170,12 @@ const disPlayNews = data => {
                                 </div>
     
                                 <div class="col-4">
-                                    <h3 class="fw-bold">${news.total_view + 'm'}+</h3>
+                                    <h3 class="fw-bold">${news.total_view ? news.total_view + 'm' : 'No data found'}+</h3>
                                     <p class="fw-bold">Views</p>
                                 </div>
     
                                 <div class="col-4">
-                                <button onclick="loadNewsSearch('${news.category_id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button onclick="loadModal('${news._id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 More...
                             </button>
                                 </div>
@@ -173,6 +190,8 @@ const disPlayNews = data => {
 }
 
 
-// loadNews(8)
+loadNews(8)
 loadAllCategories(8)
 // displayAllCategories()
+
+loadNewsSearch()
