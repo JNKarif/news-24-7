@@ -48,20 +48,29 @@
 
 
         <!-- category container nav starts -->
-        <nav class="bg-light">
+        <div class="bg-light">
             <!-- <div id="all-categories"> -->
-            <li id="all-categories" class=" d-flex justify-content-around align-items-center">
+            <li id="all-categories" class="d-flex flex-sm-row-reverse justify-content-around ">
 
 
             </li>
 
-        </nav>
+        </div>
 
         <!-- category container nav ends -->
 
     </header>
 
     <main>
+
+        <!-- spinner -->
+        <section id="loader" class="d-none">
+            <div style="height: 400px;" class="d-flex justify-content-center align-items-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </section>
         <!-- news search by category starts -->
         <section class="container">
             <div id="search-category" class="primary row g-4">
@@ -118,7 +127,6 @@
 
 
     </main>
-
 
 
 

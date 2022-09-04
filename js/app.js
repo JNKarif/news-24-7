@@ -8,9 +8,11 @@ const loadAllCategories = () => {
         .then(data => displayAllCategories(data.data.news_category))
     // .then(data => console.log(data.data.news_category))
     // console.log(data.data.news_category)
+    toggleSpinner(true)
 }
 
 const displayAllCategories = data => {
+
     const menu = document.getElementById('all-categories');
     data.forEach(function (newsArray) {
         // console.log(newsArray.category_id);
@@ -23,7 +25,16 @@ const displayAllCategories = data => {
         `
         menu.appendChild(p)
     });
+    toggleSpinner(false)
 }
+const toggleSpinner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if (isLoading) {
+        loaderSection.classList.remove('d-none')
+    }
+    else { loaderSection.classList.add('d-none') }
+}
+
 
 // onclick on categories
 const loadNewsSearch = (category_id) => {
@@ -37,8 +48,17 @@ const loadNewsSearch = (category_id) => {
 
 
 }
-// loadNewsSearch()
 
+
+// loadNewsSearch()
+// const loadModal = (id) => {
+//     const url = `https://openapi.programming-hero.com/api/news/${id}`
+//     console.log(url)
+//     fetch(url)
+//         .then(res => res.json())
+//         .then(data => console.log(data.data))
+// }
+// loadModal('${_id}')
 // onclick on categories 
 const displayNewsSearch = news => {
     // console.log(news)
@@ -60,10 +80,10 @@ const displayNewsSearch = news => {
     
                                 
                                     <div class="col-lg-4">
-                                        <img class="img-fluid" src="${news.author.img}" alt="">
+                                        <img class="img-fluid" src="${news.author ? news.author.img : 'no data found'}" alt="">
                                     </div>
                                     <div class="col-lg-8">
-                                        <h6>${news.author.name}</h6>
+                                        <h6>${news.author ? news.author.name : 'no data found'}</h6>
                                         <div class="text-muted"><small>${news.author.published_date}</small> </div>
     
                                     </div>
@@ -138,7 +158,7 @@ const disPlayNews = data => {
                                 </div>
     
                                 <div class="col-4">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button onclick="loadNewsSearch('${news.category_id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 More...
                             </button>
                                 </div>
@@ -153,6 +173,6 @@ const disPlayNews = data => {
 }
 
 
-loadNews()
-loadAllCategories()
+// loadNews(8)
+loadAllCategories(8)
 // displayAllCategories()
