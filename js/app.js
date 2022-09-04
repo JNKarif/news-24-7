@@ -33,7 +33,11 @@ const loadNewsSearch = (category_id) => {
     fetch(url)
         .then(res => res.json())
         .then(data => displayNewsSearch(data.data[0]))
+    // .then(data => console.log(data.data[0]))
+
+
 }
+// loadNewsSearch()
 
 // onclick on categories 
 const displayNewsSearch = news => {
@@ -73,8 +77,10 @@ const displayNewsSearch = news => {
                                 </div>
     
                                 <div class="col-4">
-                                    <h1 class="fw-bold">500+</h1>
-                                    <p class="fw-bold">Clients</p>
+                                <button onclick="loadNewsSearch('${news.category_id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                More...
+                            </button>
+                
                                 </div>
                             </div></p>
                             </div>
@@ -127,13 +133,14 @@ const disPlayNews = data => {
                                 </div>
     
                                 <div class="col-4">
-                                    <h1 class="fw-bold">${news.total_view + 'm'}+</h1>
+                                    <h3 class="fw-bold">${news.total_view + 'm'}+</h3>
                                     <p class="fw-bold">Views</p>
                                 </div>
     
                                 <div class="col-4">
-                                    <h1 class="fw-bold">500+</h1>
-                                    <p class="fw-bold">Clients</p>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                More...
+                            </button>
                                 </div>
                             </div></p>
                             </div>
