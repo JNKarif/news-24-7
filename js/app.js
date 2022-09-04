@@ -25,7 +25,15 @@ const displayAllCategories = data => {
 
         `
         menu.appendChild(p)
+
+
+        // newsArray.sort(function (a, b) {
+        //     return b.total_view - a.total_view
+        // }
+        // )
+
     });
+
 
 }
 const toggleSpinner = isLoading => {
@@ -189,7 +197,11 @@ const disPlayNews = data => {
                     </div>
         `
         newsContainer.appendChild(newsDiv)
+
+
     })
+
+
 }
 
 
